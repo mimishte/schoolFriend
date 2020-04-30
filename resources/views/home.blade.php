@@ -33,8 +33,8 @@
         </button>
       </div>
       <div class="modal-body">
-        {{Form::label('name', 'Text')}}
-        {{Form::text('name')}}
+        {{Form::label('text', 'Text')}}
+        {{Form::text('text', '', ['data-id' => 'task_text'])}}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="save_task">Save</button>
@@ -43,14 +43,32 @@
     </div>
   </div>
 </div>
-@endsection
-@section('javascript')
-<script>
-    $( document ).ready(function() {
-        $("p").click(function() {
-            
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#save_task").click(function() {
+
+            var taskText = $(this).data('id');
+             
+            $.ajax({
+            type: 'POST',
+            url: '/task/store',
+            data: {
+                task_text : taskText
+
+            },
+            success: function(data) {
+
+                $('.add_task').empty().append(data).modal();
+
+            },
+            error: function(xhr, textStatus, thrownError) {
+            }
+        });
         });
 
     });
 </script>
+@endsection
+@section('javascript')
+
 @endsection
