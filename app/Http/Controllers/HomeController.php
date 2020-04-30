@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Task;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $tasks = Task::where('done', 0)->get();
+        $doneTasks = Task::where('done', 1)->get();
+
+        return view('home')
+        ->with([
+            'tasks' => $tasks, 
+            'doneTasks' => $doneTasks
+            ]);
     }
 }

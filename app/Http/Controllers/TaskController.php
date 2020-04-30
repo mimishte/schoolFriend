@@ -35,9 +35,10 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->all();
-        $task = new Task();
-        $task->text($request->get('task_text'));
+        
+        $task = new Task;
+        $task->text = $request->post('task_text');
+        $task->done = 0;
         $task->save();
     }
 
@@ -72,7 +73,10 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $task = Task::find($request->post('task_id'));
+        $task->done = 1;
+        $task->save();
     }
 
     /**
