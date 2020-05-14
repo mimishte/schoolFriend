@@ -6,8 +6,8 @@
         <div class="col-md-4">
             <div class="card" id="tasks-list">
                 <div class="card-header">
-                    Tasks
-                    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#add_task">Add task</button>
+                    Задачи
+                    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#add_task">Нова задача</button>
                 </div>
 
                 <div class="card-body">
@@ -18,8 +18,8 @@
                         @foreach($tasks as $task)
                         <p class="card-text">
                             {{$task->text}}
-                            <a href="#void" data-id="{{$task->id }}" class="float-right make_task_done">
-                                Done
+                            <a href="" data-id="{{$task->id }}" class="float-right make_task_done">
+                                Готово
                             </a>
                         </p>
                         @endforeach
@@ -32,7 +32,7 @@
         <div class="col-md-4">
             <div class="card" id="done-tasks-list">
                 <div class="card-header">
-                    Done tasks
+                    Завършени задачи
                 </div>
                 <div class="card-body">
                     @if (session('status')) 
@@ -57,18 +57,18 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Add task</h5>
+        <h5 class="modal-title">Добави задача</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        {{Form::label('text', 'Text')}}
+        {{Form::label('text', 'Текст')}}
         {{Form::text('text', '', ['data-id' => 'task_text'])}}
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="save_task">Save</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="save_task">Добави</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Затвори</button>
       </div>
     </div>
   </div>
@@ -89,9 +89,9 @@
 
                 },
                 success: function(data) {
-
-                    $('#add_task').empty().append(data).modal();
-                    $('#add_task').modal('hide');
+                    $('input[data-id=task_text]').val('')
+                    $('#add_task').modal('toggle');
+                    $("#tasks-list").load(" #tasks-list > *");
 
                 },
                 error: function(xhr, textStatus, thrownError) {
@@ -111,8 +111,8 @@
                     task_id : taskId
                 },
                 success: function(data) {
-                    $("#tasks-list").load(" #tasks-list > *");
-                    $("#done-tasks-list").load(" #done-tasks-list > *");
+                    $("#tasks-list").load("#tasks-list > *");
+                    $("#done-tasks-list").load("#done-tasks-list > *");
                 },
                 error: function(xhr, textStatus, thrownError) {
                 }
